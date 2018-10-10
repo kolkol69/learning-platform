@@ -31,4 +31,7 @@ export default class CoursesPage extends Component {
     course.title = ev.target.value;
     this.setState({course});
   }
+  onClickSave(){
+    alert(`Saving ${this.state.course.title}`);
+  }
 }
