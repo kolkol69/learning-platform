@@ -12,11 +12,19 @@ class ManageCoursePage extends Component {
         this.state = {
             course: Object.assign({}, props.course),
             errors: {}
-        }
-
+        };
         this.updateCourseState = this.updateCourseState.bind(this);
         this.saveCourse = this.saveCourse.bind(this);
     }
+
+    componentWillReceiveProps(nextProps){
+        debugger;
+        if(this.props.course.id != nextProps.course.id){
+            // this is necessary to populate form when existing course is loaded directly thru the link
+            this.setState({course: Object.assign({}, nextProps.course)});
+        }
+    }
+
     updateCourseState(event) {
         const field = event.target.name;
         let course = Object.assign({},this.state.course);
