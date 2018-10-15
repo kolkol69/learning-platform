@@ -1,19 +1,22 @@
 import React, { Component, PropTypes } from 'react';
 
 export default class CoursesPage extends Component {
-  constructor(props,context){
-    super(props,context);
+  constructor(props, context) {
+    super(props, context);
 
     this.state = {
       course: { title: null }
     };
+    
+    this.onTitleChange = this.onTitleChange.bind(this);
+    this.onClickSave = this.onClickSave.bind(this);
   }
-  onTitleChange(ev){
+  onTitleChange(ev) {
     const course = this.state.course;
     course.title = ev.target.value;
-    this.setState({course});
+    this.setState({ course });
   }
-  onClickSave(){
+  onClickSave() {
     alert(`Saving ${this.state.course.title}`);
   }
   render() {
@@ -21,12 +24,12 @@ export default class CoursesPage extends Component {
       <div>
         <h1>Courses</h1>
         <h2>Add Course</h2>
-        <input 
+        <input
           type="text"
           onChange={this.onTitleChange}
           value={this.state.course.title}
         />
-        <input 
+        <input
           type="submit"
           value="Save"
           onClick={this.onClickSave}
@@ -34,5 +37,4 @@ export default class CoursesPage extends Component {
       </div>
     );
   }
-  
 }

@@ -16,6 +16,9 @@
       "jsx": true
     }
   },
+  "ecmaFeatures": {
+    "arrowFunctions":true
+  },
   "env": {
     "es6": true,
     "browser": true,
