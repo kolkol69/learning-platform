@@ -8,6 +8,14 @@ export default class CoursesPage extends Component {
       course: { title: null }
     };
   }
+  onTitleChange(ev){
+    const course = this.state.course;
+    course.title = ev.target.value;
+    this.setState({course});
+  }
+  onClickSave(){
+    alert(`Saving ${this.state.course.title}`);
+  }
   render() {
     return (
       <div>
@@ -26,12 +34,5 @@ export default class CoursesPage extends Component {
       </div>
     );
   }
-  onTitleChange(ev){
-    const course = this.state.course;
-    course.title = ev.target.value;
-    this.setState({course});
-  }
-  onClickSave(){
-    alert(`Saving ${this.state.course.title}`);
-  }
+  
 }
