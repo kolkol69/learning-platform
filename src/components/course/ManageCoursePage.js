@@ -17,27 +17,28 @@ class ManageCoursePage extends Component {
         this.saveCourse = this.saveCourse.bind(this);
     }
 
-    componentWillReceiveProps(nextProps){
-        debugger;
-        if(this.props.course.id != nextProps.course.id){
+    componentWillReceiveProps(nextProps) {
+        if (this.props.course.id != nextProps.course.id) {
             // this is necessary to populate form when existing course is loaded directly thru the link
-            this.setState({course: Object.assign({}, nextProps.course)});
+            this.setState({ course: Object.assign({}, nextProps.course) });
         }
     }
 
     updateCourseState(event) {
         const field = event.target.name;
-        let course = Object.assign({},this.state.course);
+        let course = Object.assign({}, this.state.course);
         course[field] = event.target.value;
         return this.setState({ course });
     }
-    saveCourse(event){
+    saveCourse(event) {
         event.stopPropagation();
         event.preventDefault();
-        this.props.actions.saveCourse(this.state.course);
+        this.props.actions.saveCourse(this.state.course)
+            .then(() => this.redirect());
+    }
+    redirect(){
         this.context.router.push('/courses');
     }
-
     render() {
         return (
             <div>
@@ -63,7 +64,7 @@ ManageCoursePage.contextTypes = {
     router: PropTypes.object
 };
 
-function getCourseById(courses, id){
+function getCourseById(courses, id) {
     const course = courses.filter(courses => courses.id == id);
     return course ? course[0] : null;
 }
@@ -72,7 +73,7 @@ const mapStateToProps = (state, ownProps) => {
     const courseId = ownProps.params.id; //from the path `/course/:id`
     let course = { id: '', watchHref: '', title: '', authorId: '', length: '', category: '' };
 
-    if (courseId && state.courses.length > 0){
+    if (courseId && state.courses.length > 0) {
         course = getCourseById(state.courses, courseId);
     }
 
