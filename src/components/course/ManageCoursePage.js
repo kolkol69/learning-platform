@@ -14,6 +14,13 @@ class ManageCoursePage extends Component {
             errors: {}
         }
 
+        this.updateCourseState = this.updateCourseState.bind(this);
+    }
+    updateCourseState(event) {
+        const field = event.target.name;
+        let course = Object.assign({},this.state.course);
+        course[field] = event.target.value;
+        return this.setState({ course });
     }
 
     render() {
@@ -21,7 +28,8 @@ class ManageCoursePage extends Component {
             <div>
                 <h1>Manage Course</h1>
                 <CourseForm
-                    allAuthors={[]}
+                    allAuthors={this.props.authors}
+                    onChange={this.updateCourseState}
                     course={this.state.course}
                     errors={this.state.errors}
                 />
@@ -31,13 +39,23 @@ class ManageCoursePage extends Component {
 }
 
 ManageCoursePage.propTypes = {
-    course: PropTypes.object.isRequired
+    course: PropTypes.object.isRequired,
+    authors: PropTypes.array.isRequired
 }
 
 const mapStateToProps = (state) => {
     let course = { id: '', watchHref: '', title: '', authorId: '', length: '', category: '' };
+
+    const authorsFromattedForDropdown = state.authors.map(author => {
+        return {
+            id: author.id,
+            text: author.firstName + ' ' + author.lastName
+        }
+    });
+
     return {
-        course
+        course,
+        authors: authorsFromattedForDropdown
     }
 }
 
